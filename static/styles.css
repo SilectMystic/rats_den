@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+body {
+    background-color: #0f0e17;
+    color: #a7a9be;
+    font-family: 'Nunito', sans-serif;
+    /* background-image: url('cool-background.png');
+    background-size: cover; */
+}
+
+.mainDiv {
+    background-color: grey;
+    text-align: center;
+    margin: auto;
+    margin-top: 10%;
+    padding: 30px;
+    border-radius: 8px;
+    color: black;
+}
+
+#ratImage {
+    position: inherit;
+}
