@@ -21,3 +21,12 @@ body {
 #ratImage {
     position: inherit;
 }
+
+.signDiv {
+    text-align: center;
+    margin: auto;
+    margin-top: 10%;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: pink;
+}
