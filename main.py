@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from sen import contra, secret
+# from sen import contra, secret
 import pymysql
 import pymysql.cursors
 import flask_login
@@ -79,3 +79,7 @@ def feed():
 @app.route('/new')
 def new_landing():
     return render_template('prototypeSM.html.jinja')
+
+@app.route('/new_sign_in')
+def new_sign_in():
+    return render_template('prototype_signin.html')
