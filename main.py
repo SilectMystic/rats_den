@@ -1,52 +1,56 @@
 from flask import Flask, render_template, request, redirect
-# from sen import contra, secret
+from sen import contra, secret
 import pymysql
 import pymysql.cursors
 import flask_login
 
 app = Flask(__name__)
-# app.secret_key = f'{secret}'
-# login_manager = flask_login.LoginManager()
-# login_manager.init_app(app)
+app.secret_key = f'{secret}'
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 
-# connection = pymysql.connect(
-#     database = 'cvasquez_rd',
-#     user = 'cvasquez',
-#     password = f'{contra}',
-#     host = '10.100.33.60',
-#     cursorclass = pymysql.cursors.DictCursor
-# )
+connection = pymysql.connect(
+    database = 'cvasquez_rd',
+    user = 'cvasquez',
+    password = f'{contra}',
+    host = '10.100.33.60',
+    cursorclass = pymysql.cursors.DictCursor
+)
 
-# class User:
-#     is_authenticated = True
-#     is_anonymous = False
-#     is_active = True
+class User:
+    is_authenticated = True
+    is_anonymous = False
+    is_active = True
 
-#     def __init__(self, id,username):
-#         self.id = id
-#         self.username = username
+    def __init__(self, id,username):
+        self.id = id
+        self.username = username
     
-#     def get_id(self):
-#         return str(self.id)
+    def get_id(self):
+        return str(self.id)
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     cursor = connection.cursor()
-#     cursor.execute(f"SELECT * FROM `users` WHERE `id` = '{user_id}'")
-#     results = cursor.fetchone()
-#     connection.commit()
-#     cursor.close()
-#     if results is None:
-#         return None
-#     return User((results['id']), results['username'])
+@login_manager.user_loader
+def load_user(user_id):
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT * FROM `users` WHERE `id` = '{user_id}'")
+    results = cursor.fetchone()
+    connection.commit()
+    cursor.close()
+    if results is None:
+        return None
+    return User((results['id']), results['username'])
 
 
 @app.route('/')
 def index():
+    if flask_login.current_user.is_authenticated:
+        return redirect('/feed')
     return render_template('landing.html.jinja')
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
+    if flask_login.current_user.is_authenticated:
+        return redirect('/feed')
     if request.method == 'POST':
         new_username = request.form['new_username']
         new_email = request.form['new_email']
@@ -59,6 +63,8 @@ def sign_up():
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
+    if flask_login.current_user.is_authenticated:
+        return redirect('/feed')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -74,7 +80,16 @@ def sign_in():
 @app.route('/feed')
 @flask_login.login_required
 def feed():
-    return render_template('feed.html.jinja')
+    if flask_login.current_user.is_authenticated == False:
+        return redirect('/')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM `posts` ORDER BY `timestamp`")
+    connection.commit()
+    cursor.close()
+    posts_db = cursor.fetchall()
+    user_login = flask_login.current_user.username
+    
+    return render_template('feed.html.jinja', posts_db = posts_db, user_login = user_login)
 
 @app.route('/new')
 def new_landing():
