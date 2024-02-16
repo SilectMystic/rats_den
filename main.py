@@ -1,21 +1,35 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, g
 from sen import contra, secret
 import pymysql
 import pymysql.cursors
-import flask_login
+import flask_login 
 
 app = Flask(__name__)
 app.secret_key = f'{secret}'
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
-connection = pymysql.connect(
-    database = 'cvasquez_rd',
-    user = 'cvasquez',
-    password = f'{contra}',
-    host = '10.100.33.60',
-    cursorclass = pymysql.cursors.DictCursor
-)
+def connect_db():
+    return pymysql.connect(
+        host="10.100.33.60",
+        user="cvasquez",
+        password=f"{contra}",
+        database="cvasquez_rd",
+        cursorclass=pymysql.cursors.DictCursor,
+        autocommit=True
+    )
+
+def get_db():
+    '''Opens a new database connection per request.'''        
+    if not hasattr(g, 'db'):
+        g.db = connect_db()
+    return g.db    
+
+@app.teardown_appcontext
+def close_db(error):
+    '''Closes the database connection at the end of request.'''    
+    if hasattr(g, 'db'):
+        g.db.close() 
 
 class User:
     is_authenticated = True
@@ -31,10 +45,10 @@ class User:
 
 @login_manager.user_loader
 def load_user(user_id):
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
     cursor.execute(f"SELECT * FROM `users` WHERE `id` = '{user_id}'")
     results = cursor.fetchone()
-    connection.commit()
+    get_db().commit()
     cursor.close()
     if results is None:
         return None
@@ -55,10 +69,10 @@ def sign_up():
         new_username = request.form['new_username']
         new_email = request.form['new_email']
         new_password = request.form['new_password']
-        cursor = connection.cursor()
+        cursor = get_db().cursor()
         cursor.execute(f'INSERT INTO `users` (`username`, `email`, `password`) VALUES ("{new_username}", "{new_email}", "{new_password}");')
         cursor.close()
-        connection.commit()
+        get_db().commit()
     return render_template('sign_up.html')
 
 @app.route('/sign_in', methods=['GET', 'POST'])
@@ -68,7 +82,7 @@ def sign_in():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        cursor = connection.cursor()
+        cursor = get_db().cursor()
         cursor.execute(f'SELECT * FROM `users` WHERE `username` = "{username}"')
         result = cursor.fetchone()
         if password == result['password']:
@@ -77,19 +91,34 @@ def sign_in():
             return redirect('/feed')
     return render_template('sign_in.html')
 
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return redirect('/')
+
 @app.route('/feed')
 @flask_login.login_required
 def feed():
     if flask_login.current_user.is_authenticated == False:
         return redirect('/')
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` ORDER BY `timestamp`")
-    connection.commit()
+    get_db().commit()
     cursor.close()
     posts_db = cursor.fetchall()
     user_login = flask_login.current_user.username
-    
+
     return render_template('feed.html.jinja', posts_db = posts_db, user_login = user_login)
+
+@app.route('/post', methods=['POST'])
+@flask_login.login_required
+def create_post():
+    description = request.form['description']
+    user_id = flask_login.current_user.id
+
+    cursor = get_db().cursor()
+
+    cursor.execute("INSERT INTO `posts` (`description`, `user_id`)")
 
 @app.route('/new')
 def new_landing():

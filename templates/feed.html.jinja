@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body class="container">
-    <div class="container">
+    <div class="container sticky-top">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
@@ -16,28 +16,69 @@
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="/sign_in" class="nav-link">{{user_login}}</a></li>
-                <li class="nav-item"><a href="/sign_up" class="nav-link">Sign In</a></li>
+                <li class="nav-item"><a href="/feed" class="nav-link active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="/profile" class="nav-link">{{user_login}}</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Log Out</a></li>
+                <li class="nav-item"><button class="nav-link" id="post_button">Posts</button></li>
             </ul>
         </header>
     </div>
     <main class="container middle">
-        <div>
+    <div id="posts_maker">
+        jhgc
+    </div>
+        <div id="posts">
             {% for posts in posts_db %}
             <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="20%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                <div>
+                    {{posts.user_id}}
+                </div>
+                {# {%if posts.image > ''%}
+                <div>
+                    <div id="carouselExampleIndicators" class="carousel slide container pictureCarousel4">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="/static/images.jpg" width="auto" height="292.5px" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="#" width="520px" height="292.5px" class="d-block w-100" alt="">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="#" width="520px" height="292.5px" class="d-block w-100" alt="">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon carouselButton" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon carouselButton" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                {%endif%} #}
+                {%if posts.image > ''%}
+                <img id="feed_images" src="/static/ratsden.png">
+                <hr>
+                {%endif%}
                 <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text">{{posts.description}}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
+                        {# <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                        <small class="text-body-secondary">9 mins</small>
+                        </div> #}
+                        <small class="text-body-secondary">{{posts.timestamp}}</small>
                     </div>
                 </div>
             </div>
+            <br>
             {%endfor%}
         </div>
         </div>
@@ -58,5 +99,6 @@
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="support.js"></script>
 </body>
 </html>
