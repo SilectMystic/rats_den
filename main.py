@@ -11,7 +11,7 @@ login_manager.init_app(app)
 
 def connect_db():
     return pymysql.connect(
-        host="10.100.33.60",
+        host="127.0.0.1",
         user="cvasquez",
         password=f"{contra}",
         database="cvasquez_rd",
@@ -113,12 +113,15 @@ def feed():
 @app.route('/post', methods=['POST'])
 @flask_login.login_required
 def create_post():
-    description = request.form['description']
+    description = request.form['new_post']
     user_id = flask_login.current_user.id
 
     cursor = get_db().cursor()
+    cursor.execute(f"INSERT INTO `posts` (`description`, `user_id`) VALUES ('{description}', '{user_id}')")
+    cursor.close()
+    get_db().commit()
 
-    cursor.execute("INSERT INTO `posts` (`description`, `user_id`)")
+
 
 @app.route('/new')
 def new_landing():

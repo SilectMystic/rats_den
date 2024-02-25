@@ -95,6 +95,16 @@ body {
 
 #posts_maker {
     background-color: black;
-    padding: 300px;
+    width: 600px;
+    height: 400px;
     display: none;
+    position: absolute;
+    top: 10%;
+    left: 30.46%;
+}
+
+#pclose_button {
+    position: absolute;
+    right: 1%;
+    top: 1%;
 }
