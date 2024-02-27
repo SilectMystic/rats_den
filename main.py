@@ -54,6 +54,10 @@ def load_user(user_id):
         return None
     return User((results['id']), results['username'])
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect('/')
+
 
 @app.route('/')
 def index():
@@ -96,7 +100,7 @@ def logout():
     flask_login.logout_user()
     return redirect('/')
 
-@app.route('/feed')
+@app.route('/feed', methods=['GET','POST'])
 @flask_login.login_required
 def feed():
     if flask_login.current_user.is_authenticated == False:
@@ -107,19 +111,27 @@ def feed():
     cursor.close()
     posts_db = cursor.fetchall()
     user_login = flask_login.current_user.username
+    if request.method == 'POST':
+        description = request.form['new_post']
+        user_id = flask_login.current_user.get_id()
+        cursor = get_db().cursor()
+        cursor.execute(f"INSERT INTO `posts` (`user_id`, `description`) VALUES ('{user_id}', '{description}')")
+        cursor.close()
+        get_db().commit()
+        return redirect('/feed')
 
     return render_template('feed.html.jinja', posts_db = posts_db, user_login = user_login)
 
-@app.route('/post', methods=['POST'])
-@flask_login.login_required
-def create_post():
-    description = request.form['new_post']
-    user_id = flask_login.current_user.id
+# @app.route('/feed', methods=['POST'])
+# def create_post():
+#     if  request.method == 'POST':
+#         description = request.form['new_post']
+#         user_id = flask_login.current_user.id
 
-    cursor = get_db().cursor()
-    cursor.execute(f"INSERT INTO `posts` (`description`, `user_id`) VALUES ('{description}', '{user_id}')")
-    cursor.close()
-    get_db().commit()
+#         cursor = get_db().cursor()
+#         cursor.execute(f"INSERT INTO `posts` (`user_id`, `description`) VALUES ('{user_id}', '{description}')")
+#         cursor.close()
+#         get_db().commit()
 
 
 

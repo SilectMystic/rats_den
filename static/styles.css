@@ -3,6 +3,7 @@
 body {
     /* background-color: #000053; */
     color: #a7a9be;
+    background-color: #55423d;
     font-family: 'Nunito', sans-serif;
     /* background-image: url('cool-background.png');
     background-size: cover; */
@@ -37,7 +38,7 @@ body {
 
 #lanBox {
     padding: 100px;
-    background-color: grey;
+    background-color: rgba(39, 28, 25, 0.2);
     border-radius: 8px;
 }
 
@@ -53,7 +54,7 @@ body {
 }
 
 .vl {
-    border-left: 6px solid green;
+    border-left: 6px solid #ffc0ad;
     height: 480px;
 }
 
@@ -65,10 +66,17 @@ body {
 
 #lan_right {
     position: absolute;
-    background-color: aqua;
-    top: 28%;
-    right: 13%;
-    width: 300px;
+    background-color: #140d0b;
+    top: 20%;
+    right: 6.5%;
+    width: 500px;
+    height: 300px;
+}
+
+#lan_rightin > p{
+    padding: 45px;
+    font-size: larger;
+
 }
 
 #lan_rightin {
@@ -99,8 +107,8 @@ body {
     height: 400px;
     display: none;
     position: absolute;
-    top: 10%;
-    left: 30.46%;
+    top: 300px;
+    left: 700px;
 }
 
 #pclose_button {
@@ -108,3 +116,18 @@ body {
     right: 1%;
     top: 1%;
 }
+
+/* Nav bar styles */
+
+nav {
+    background-color: #2e375e;
+    border-radius: 8px;
+}
+nav li{
+    padding-right: 15px;
+}
+#navColor {
+    background-color: #495592;
+    border-radius: 8px;
+}
+
