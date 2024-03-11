@@ -9,6 +9,17 @@ body {
     background-size: cover; */
 }
 
+.buttons {
+    color: blue;
+    border-radius: 8px;
+    background-color: black;
+}
+
+.buttons:hover {
+    background-color: white;
+    color: black;
+}
+
 .mainDiv {
     background-color: grey;
     text-align: center;
@@ -71,6 +82,7 @@ body {
     right: 6.5%;
     width: 500px;
     height: 300px;
+    border-radius: 8px;
 }
 
 #lan_rightin > p{
@@ -86,6 +98,11 @@ body {
 .middle {
     margin: auto;
     text-align: center;
+}
+/* Sign In/Sign Up */
+#sign_box {
+    background-color: aqua;
+    padding: 45px;
 }
 /* Feed Page styles */
 #posts {
