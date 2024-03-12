@@ -5,52 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rats Den</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/styles.css" 
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
-<body class="container">
-    <div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-                <span class="fs-4">Rats Den</span>
-            </a>
+<body>
+    <div class="nav_bar" style="background-color: #2f3236;">
+        <div class="inner_nav container">
+            <header class="d-flex flex-wrap justify-content-center">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                    <span class="fs-4" style="color: #fffffe;">Rats Den</span>
+                </a>
 
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="/sign_in" class="nav-link">Log In</a></li>
-                <li class="nav-item"><a href="/sign_up" class="nav-link">Sign In</a></li>
-            </ul>
-        </header>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
+                    <li class="nav-item"><a href="/sign_in" class="nav-link active">Sign In</a></li>
+                    <li class="nav-item"><a href="/sign_up" class="nav-link">Sign Up</a></li>
+                </ul>
+            </header>
+        </div>
     </div>
+    <br>
 
     <main class="container">
         <div id="sign_box" class="text-center">
-            <img src="/static/ratsden.png" alt="">
+            <img src="/static/ratsden.png" alt="Rats Den logo" style="border-radius: 8px;">
             <br><br>
-            Welcome back to the rats den
-            <hr>
-            <form>
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="123">
-                <input type="submit">
-                <input type="reset">
+            <h3>Welcome back to the rats den!</h3>
+            <hr><br>
+            <form method="POST">
+                <div>
+                    <label>Username: </label>
+                    <input type="text" name="username" placeholder="Mystic">
+                </div>
+                <br>
+                <div>
+                    <label>Password: </label>
+                    <input type="password" name="password" placeholder="asdf">
+                </div>
+                <br>
+                <input type="submit" class="form_button">
+                &nbsp;
+                <input type="reset" class="form_button">
             </form>
         </div>
     </main>
     
     <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 Carlos Vasquez. All Rights Reserved</p>
-
-            <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-            </a>
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="/sign_in" class="nav-link px-2 text-body-secondary">Features</a></li>
-                <li class="nav-item"><a href="/sign_out" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-            </ul>
+        <footer class="justify-content-between align-items-center py-3 my-4 border-top text-center">
+            <p>&copy; 2024 Carlos Vasquez. All Rights Reserved</p>
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

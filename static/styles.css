@@ -2,15 +2,28 @@
 
 body {
     /* background-color: #000053; */
-    color: #a7a9be;
-    background-color: #55423d;
+    color: #fffffe;
+    background-color: #242629;
     font-family: 'Nunito', sans-serif;
     /* background-image: url('cool-background.png');
     background-size: cover; */
 }
 
+.nav_bar{
+    padding: 10px;
+}
+
+.inner_nav{
+    border-radius: 8px;
+    background-color: #3e434a;
+}
+
+footer {
+    color: white;
+}
+
 .buttons {
-    color: blue;
+    color: #7f5af0;
     border-radius: 8px;
     background-color: black;
 }
@@ -27,7 +40,7 @@ body {
     margin-top: 10%;
     padding: 30px;
     border-radius: 8px;
-    color: black;
+    color: #94a1b2;
 }
 
 .mainDiv{
@@ -49,7 +62,7 @@ body {
 
 #lanBox {
     padding: 100px;
-    background-color: rgba(39, 28, 25, 0.2);
+    background-color: #16161a;
     border-radius: 8px;
 }
 
@@ -65,10 +78,10 @@ body {
 }
 
 .vl {
-    border-left: 6px solid #ffc0ad;
-    height: 480px;
+    border-left: 4px solid #fffffe;
+    height: 485px;
 }
-
+/* Landing Page */
 #v_land{
     position: absolute;
     left: 48%;
@@ -77,7 +90,7 @@ body {
 
 #lan_right {
     position: absolute;
-    background-color: #140d0b;
+    background-color: #242629;
     top: 20%;
     right: 6.5%;
     width: 500px;
@@ -101,13 +114,39 @@ body {
 }
 /* Sign In/Sign Up */
 #sign_box {
-    background-color: aqua;
+    background-color: #16161a;
     padding: 45px;
+    border-radius: 8px;
+}
+input {
+    background-color: #242629;
+    color: #fffffe;
+    border: none;
+    border-radius: 8px;
+}
+
+::placeholder {
+    color: #fffffe;
+}
+
+.form_button {
+    background-color: #7f5af0;
+    border: none;
+    border-radius: 8px;
+}
+
+.form_button:hover {
+    background-color: #5f43b4;
 }
 /* Feed Page styles */
 #posts {
     margin: auto;
     width: 600px;
+}
+
+.card_colors {
+    color: #fffffe;
+    background-color: #16161a;
 }
 
 #feed_images {
@@ -119,6 +158,14 @@ body {
 }
 
 #posts_maker {
+    background-color: #16161a;
+    color: #fffffe;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* #posts_maker {
     background-color: black;
     width: 600px;
     height: 400px;
@@ -132,7 +179,7 @@ body {
     position: absolute;
     right: 1%;
     top: 1%;
-}
+} */
 
 /* Nav bar styles */
 

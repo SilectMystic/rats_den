@@ -18,14 +18,27 @@
 
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
-                    <li class="nav-item"><a href="/sign_in" class="nav-link active">Sign In</a></li>
-                    <li class="nav-item"><a href="/sign_up" class="nav-link">Sign Up</a></li>
+                    <li class="nav-item"><a href="/posts" class="nav-link active">New Post</a></li>
+                    <li class="nav-link">{{user_login}}</li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Sign Out</a></li>
                 </ul>
             </header>
         </div>
     </div>
     <br>
-    <main></main>
+    <main class="container">
+        <div id="posts_maker">
+            <h2>Make a new post!</h2>
+            <hr>
+            <form method="POST">
+                <textarea style="resize: none; width: 600px; height:300px; background-color: #242629; color: #fffffe;" name="new_post" placeholder="Write your new post here!"></textarea>
+                <br>
+                <input type="submit" class="form_button">
+                &nbsp;
+                <input type="reset" class="form_button">
+            </form>
+        </div>
+    </main>
     <div class="container">
         <footer class="justify-content-between align-items-center py-3 my-4 border-top text-center">
             <p>&copy; 2024 Carlos Vasquez. All Rights Reserved</p>

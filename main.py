@@ -59,11 +59,31 @@ def unauthorized():
     return redirect('/')
 
 
+# @app.route('/')
+# def index():
+#     if flask_login.current_user.is_authenticated:
+#         return redirect('/feed')
+#     return render_template('landing.html.jinja')
+
 @app.route('/')
 def index():
     if flask_login.current_user.is_authenticated:
         return redirect('/feed')
-    return render_template('landing.html.jinja')
+    return render_template('prototypeSM.html.jinja')
+
+# @app.route('/sign_up', methods=['GET', 'POST'])
+# def sign_up():
+#     if flask_login.current_user.is_authenticated:
+#         return redirect('/feed')
+#     if request.method == 'POST':
+#         new_username = request.form['new_username']
+#         new_email = request.form['new_email']
+#         new_password = request.form['new_password']
+#         cursor = get_db().cursor()
+#         cursor.execute(f'INSERT INTO `users` (`username`, `email`, `password`) VALUES ("{new_username}", "{new_email}", "{new_password}");')
+#         cursor.close()
+#         get_db().commit()
+#     return render_template('sign_up.html')
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
@@ -77,7 +97,24 @@ def sign_up():
         cursor.execute(f'INSERT INTO `users` (`username`, `email`, `password`) VALUES ("{new_username}", "{new_email}", "{new_password}");')
         cursor.close()
         get_db().commit()
-    return render_template('sign_up.html')
+        return redirect('/sign_in')
+    return render_template('prototype_signup.html')
+
+# @app.route('/sign_in', methods=['GET', 'POST'])
+# def sign_in():
+#     if flask_login.current_user.is_authenticated:
+#         return redirect('/feed')
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         password = request.form['password']
+#         cursor = get_db().cursor()
+#         cursor.execute(f'SELECT * FROM `users` WHERE `username` = "{username}"')
+#         result = cursor.fetchone()
+#         if password == result['password']:
+#             user = load_user(result['id'])
+#             flask_login.login_user(user)
+#             return redirect('/feed')
+#     return render_template('sign_in.html')
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
@@ -93,7 +130,7 @@ def sign_in():
             user = load_user(result['id'])
             flask_login.login_user(user)
             return redirect('/feed')
-    return render_template('sign_in.html')
+    return render_template('prototype_signin.html')
 
 @app.route('/logout')
 def logout():
@@ -106,7 +143,7 @@ def feed():
     if flask_login.current_user.is_authenticated == False:
         return redirect('/')
     cursor = get_db().cursor()
-    cursor.execute("SELECT * FROM `posts` ORDER BY `timestamp`")
+    cursor.execute("SELECT * FROM `posts` INNER JOIN `users` ON `posts`.user_id = `users`.id ORDER BY `timestamp` DESC")
     get_db().commit()
     cursor.close()
     posts_db = cursor.fetchall()
@@ -122,6 +159,19 @@ def feed():
 
     return render_template('feed.html.jinja', posts_db = posts_db, user_login = user_login)
 
+@app.route('/posts', methods=['GET', 'POST'])
+def posts():
+    user_login = flask_login.current_user.username
+    if request.method == 'POST':
+        description = request.form['new_post']
+        user_id = flask_login.current_user.get_id()
+        cursor = get_db().cursor()
+        cursor.execute(f"INSERT INTO `posts` (`user_id`, `description`) VALUES ('{user_id}', '{description}')")
+        cursor.close()
+        get_db().commit()
+        return redirect('/feed')
+    return render_template('posts.html.jinja', user_login = user_login)
+
 # @app.route('/feed', methods=['POST'])
 # def create_post():
 #     if  request.method == 'POST':
@@ -132,13 +182,3 @@ def feed():
 #         cursor.execute(f"INSERT INTO `posts` (`user_id`, `description`) VALUES ('{user_id}', '{description}')")
 #         cursor.close()
 #         get_db().commit()
-
-
-
-@app.route('/new')
-def new_landing():
-    return render_template('prototypeSM.html.jinja')
-
-@app.route('/new_sign_in')
-def new_sign_in():
-    return render_template('prototype_signin.html')

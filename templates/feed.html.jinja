@@ -7,29 +7,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
-<body class="container">
-    <div class="container sticky-top">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-                <span class="fs-4">Rats Den</span>
-            </a>
+<body>
+    <div class="nav_bar" style="background-color: #2f3236;">
+        <div class="inner_nav container">
+            <header class="d-flex flex-wrap justify-content-center">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                    <span class="fs-4" style="color: #fffffe;">Rats Den</span>
+                </a>
 
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="/feed" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="/profile" class="nav-link">{{user_login}}</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link">Log Out</a></li>
-                <li class="nav-item"><button class="nav-link" id="post_button">Posts</button></li>
-            </ul>
-        </header>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+                    <li class="nav-item"><a href="/posts" class="nav-link">New Post</a></li>
+                    <li class="nav-link">{{user_login}}</li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Sign Out</a></li>
+                </ul>
+            </header>
+        </div>
     </div>
+    <br>
     <main class="container middle">
 
         <div id="posts">
             {% for posts in posts_db %}
-            <div class="card shadow-sm">
-                <div>
-                    {{posts.user_id}}
+            <div class="card shadow-sm card_colors">
+                <div style="padding-top: 10px;">
+                    Made By, {{posts.username}}
                 </div>
                 {# {%if posts.image > ''%}
                 <div>
@@ -61,25 +64,25 @@
                     </div>
                 </div>
                 {%endif%} #}
-                {%if posts.image > ''%}
-                <img id="feed_images" src="/static/ratsden.png">
+                {# {%if posts.image > ''%} #}
+                {# <img id="feed_images" src="/static/ratsden.png">
                 <hr>
-                {%endif%}
+                {%endif%} #}
                 <div class="card-body">
-                    <p class="card-text">{{posts.description}}</p>
+                    <p class="card-text" style="background-color: #242629; padding: 10px; border-radius: 8px;">{{posts.description}}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         {# <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                         </div> #}
-                        <small class="text-body-secondary">{{posts.timestamp}}</small>
+                        <small class="card_colors">{{posts.timestamp}}</small>
                     </div>
                 </div>
             </div>
             <br>
             {%endfor%}
         </div>
-        <div id="posts_maker">
+        {# <div id="posts_maker">
             <div style="padding: 13px;">
                 <button id="pclose_button">X</button>
             </div>
@@ -94,21 +97,11 @@
             &nbsp; &nbsp;
             <input type="submit">
             </form>
-        </div>
+        </div> #}
     </main>
     <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 Carlos Vasquez. All Rights Reserved</p>
-
-            <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-            </a>
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="/sign_in" class="nav-link px-2 text-body-secondary">Features</a></li>
-                <li class="nav-item"><a href="/sign_out" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-            </ul>
+        <footer class="justify-content-between align-items-center py-3 my-4 border-top text-center">
+            <p>&copy; 2024 Carlos Vasquez. All Rights Reserved</p>
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
